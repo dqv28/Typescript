@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import React from 'react'
 import { createProduct, deleteProduct, getProduct, getProducts, updateProduct } from '../api/product'
 import { IProduct } from '../interfaces/product'
 
