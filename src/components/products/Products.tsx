@@ -2,21 +2,15 @@ import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hook'
 import { IProduct } from '../../interfaces/product';
+import { useGetProductsQuery, useRemoveProductMutation } from '../../services/product';
 import { fetchProducts, removeProduct } from '../../slices/product';
 
 const Products = () => {
-    const dispatch = useAppDispatch();
-    const products: IProduct[] = useAppSelector((state: any) => state.products.value)
-    useEffect(() => {
-        dispatch(fetchProducts())
-    }, [])
+    const { data: products, isLoading, error } = useGetProductsQuery()
+    const [deleteProduct, response] = useRemoveProductMutation()
 
-    const onHandleRemove = (id: number): void => {
-        const confirm = window.confirm('Are you sure?')
-        if (confirm) {
-            dispatch(removeProduct(id))
-        }
-    }
+    if (isLoading) return <div>Loading...</div>
+    if (error) return <div>Error</div>
 
     return (
         <>
@@ -24,12 +18,12 @@ const Products = () => {
             <div className='d-flex justify-content-between align-items-center'>
                 <h1 className="h3 my-3 text-gray-800">Products Manage Table</h1>
                 <NavLink to={`/product-add`}>
-                    <a href="#" className="btn btn-primary btn-icon-split">
+                    <button className="btn btn-primary btn-icon-split">
                         <span className="icon text-white-50">
                             <i className="fas fa-plus"></i>
                         </span>
                         <span className="text">Add New Product</span>
-                    </a>
+                    </button>
                 </NavLink>
             </div>
             <div className="card mb-4">
@@ -50,7 +44,7 @@ const Products = () => {
                             </thead>
                             <tbody>
 
-                                {products.length > 0 ? products.map((item, index) => (
+                                {products ? products.map((item: any, index: number) => (
                                     <tr key={index}>
                                         <td>
                                             <input type="checkbox" name="" id="" />
@@ -62,8 +56,11 @@ const Products = () => {
                                         </td>
                                         <td>Desc</td>
                                         <td>
-                                            <button className='btn btn-danger text'
-                                                onClick={() => onHandleRemove(item.id)}>
+                                            <button className='btn btn-danger text mr-2'
+                                                onClick={() => {
+                                                    window.confirm("Are you sure?")
+                                                    deleteProduct(item.id)
+                                                }}>
                                                 Remove
                                             </button>
                                             <NavLink to={`/product/${item.id}/edit`}>
