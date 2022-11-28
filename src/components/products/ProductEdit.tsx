@@ -55,9 +55,9 @@ const ProductEdit = () => {
                     <div className="mb-3">
                         <label htmlFor="exampleInputEmail1" className="form-label">Descrition</label>
                         <input type="text" className="form-control"
-                            {...register("name", { required: true, minLength: 5 })} />
+                            {...register("name", { required: true, minLength: 10 })} />
                         {errors.name && errors.name.type === "required" && <span className='text-danger'>This field is required.</span>}
-                        {errors.name && errors.name.type === "minLength" && <span className='text-danger'>This field must be 5 charaters.</span>}
+                        {errors.name && errors.name.type === "minLength" && <span className='text-danger'>This field must be 10 charaters.</span>}
                     </div>
                     <div>
                         <button type="submit" className="btn btn-primary mr-2">Update</button>
