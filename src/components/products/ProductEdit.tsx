@@ -45,6 +45,20 @@ const ProductEdit = () => {
                         {errors.price && errors.price.type === "required" && <span className='text-danger'>This field is required.</span>}
                         {errors.price && errors.price.type === "valueAsNumber" && <span className='text-danger'>This field is not number.</span>}
                     </div>
+                    <div className="mb-3">
+                        <label htmlFor="exampleInputEmail1" className="form-label">Category</label>
+                        <input type="text" className="form-control"
+                            {...register("name", { required: true, minLength: 5 })} />
+                        {errors.name && errors.name.type === "required" && <span className='text-danger'>This field is required.</span>}
+                        {errors.name && errors.name.type === "minLength" && <span className='text-danger'>This field must be 5 charaters.</span>}
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="exampleInputEmail1" className="form-label">Descrition</label>
+                        <input type="text" className="form-control"
+                            {...register("name", { required: true, minLength: 5 })} />
+                        {errors.name && errors.name.type === "required" && <span className='text-danger'>This field is required.</span>}
+                        {errors.name && errors.name.type === "minLength" && <span className='text-danger'>This field must be 5 charaters.</span>}
+                    </div>
                     <div>
                         <button type="submit" className="btn btn-primary mr-2">Update</button>
                         <NavLink to={'/admin/products'}>
