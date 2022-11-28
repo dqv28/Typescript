@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { NavLink, useParams } from 'react-router-dom'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch } from '../../app/hook'
 import { IProduct } from '../../interfaces/product'
 import { useEditProductMutation, useGetProductQuery } from '../../services/product'
 import { fetchProduct } from '../../slices/product'
 
 const ProductEdit = () => {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const { id } = useParams()
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IProduct>()
@@ -20,7 +21,10 @@ const ProductEdit = () => {
 
     const [editProduct, { isLoading }] = useEditProductMutation()
     const onHandleEdit: SubmitHandler<IProduct> = (product: IProduct) => {
-        editProduct(product)
+        try {
+            editProduct(product)
+            navigate('/admin/products')
+        } catch (error) { }
     }
     return (
         <>
@@ -43,7 +47,7 @@ const ProductEdit = () => {
                     </div>
                     <div>
                         <button type="submit" className="btn btn-primary mr-2">Update</button>
-                        <NavLink to={'/products'}>
+                        <NavLink to={'/admin/products'}>
                             <button type="button" className="btn btn-primary">Back</button>
                         </NavLink>
                     </div>

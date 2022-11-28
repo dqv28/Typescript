@@ -1,29 +1,11 @@
 {
-  "products": [
+  "users": [
     {
-      "name": "Product A",
-      "price": 10,
+      "username": "vuongdq",
+      "email": "dovuong020802@gmail.com",
+      "password": "123456",
       "id": 1
-    },
-    {
-      "name": "Product B",
-      "price": 20,
-      "id": 2
-    },
-    {
-      "name": "Product C",
-      "price": 203,
-      "id": 3
-    },
-    {
-      "name": "Product D",
-      "price": 123,
-      "id": 4
-    },
-    {
-      "name": "Product E",
-      "price": 2000,
-      "id": 5
     }
-  ]
+  ],
+  "products": []
 }

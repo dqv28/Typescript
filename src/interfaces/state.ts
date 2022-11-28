@@ -1,4 +1,3 @@
 export interface State {
-    value: any
-    loading: boolean;
+    isLogin: boolean;
 }

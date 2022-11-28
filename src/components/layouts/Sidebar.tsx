@@ -20,7 +20,7 @@ const Sidebar = (props: Props) => {
                 <hr className="sidebar-divider my-0" />
                 {/* Nav Item - Dashboard */}
                 <li className="nav-item active">
-                    <NavLink to={'/'}>
+                    <NavLink to={'/admin'}>
                         <a className="nav-link">
                             <i className="fas fa-fw fa-tachometer-alt" />
                             <span>
@@ -30,7 +30,7 @@ const Sidebar = (props: Props) => {
                     </NavLink>
                 </li>
                 <li className="nav-item active">
-                    <NavLink to={'/products'}>
+                    <NavLink to={'/admin/products'}>
                         <a className="nav-link">
                             <i className="fas fa-fw fa-table" />
                             <span>

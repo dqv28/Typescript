@@ -1,20 +1,19 @@
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { NavLink, redirect } from 'react-router-dom'
-import { useAppDispatch } from '../../app/hook'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { IProduct } from '../../interfaces/product'
 import { useAddProductMutation } from '../../services/product'
-import { addProduct } from '../../slices/product'
 
 const ProductAdd = () => {
+    const navigate = useNavigate()
     const [addProduct, { isLoading }] = useAddProductMutation()
     const { register, handleSubmit, formState: { errors } } = useForm<IProduct>()
     const onHandleAdd: SubmitHandler<IProduct> = (product: IProduct) => {
-        redirect('/products')
-        addProduct(product)
-
+        try {
+            addProduct(product)
+            navigate('/admin/products')
+        } catch (error) { }
     }
-
     return (
         <div>
             <div className='w-75 mx-auto'>
@@ -28,15 +27,37 @@ const ProductAdd = () => {
                         {errors.name && errors.name.type === "minLength" && <span className='text-danger'>This field must be 5 charaters.</span>}
                     </div>
                     <div className="mb-3">
+                        <label htmlFor="exampleInputEmail1" className="form-label">Image</label>
+                        <input type="file" className="form-control"
+                            {...register("name", { required: true, minLength: 5 })} />
+                        {errors.name && errors.name.type === "required" && <span className='text-danger'>This field is required.</span>}
+                        {errors.name && errors.name.type === "minLength" && <span className='text-danger'>This field must be 5 charaters.</span>}
+                    </div>
+
+                    <div className="mb-3">
                         <label htmlFor="exampleInputPassword1" className="form-label">Price</label>
                         <input type="text" className="form-control"
                             {...register("price", { required: true, valueAsNumber: true })} />
                         {errors.price && errors.price.type === "required" && <span className='text-danger'>This field is required.</span>}
                         {errors.price && errors.price.type === "valueAsNumber" && <span className='text-danger'>This field is not number.</span>}
                     </div>
+                    <div className="mb-3">
+                        <label htmlFor="exampleInputEmail1" className="form-label">Category</label>
+                        <input type="text" className="form-control"
+                            {...register("name", { required: true, minLength: 5 })} />
+                        {errors.name && errors.name.type === "required" && <span className='text-danger'>This field is required.</span>}
+                        {errors.name && errors.name.type === "minLength" && <span className='text-danger'>This field must be 5 charaters.</span>}
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="exampleInputEmail1" className="form-label">Descrition</label>
+                        <input type="text" className="form-control"
+                            {...register("name", { required: true, minLength: 5 })} />
+                        {errors.name && errors.name.type === "required" && <span className='text-danger'>This field is required.</span>}
+                        {errors.name && errors.name.type === "minLength" && <span className='text-danger'>This field must be 5 charaters.</span>}
+                    </div>
                     <div>
                         <button type="submit" className="btn btn-primary mr-2">Add</button>
-                        <NavLink to={'/products'}>
+                        <NavLink to={'/admin/products'}>
                             <button type="button" className="btn btn-primary">Back</button>
                         </NavLink>
                     </div>

@@ -1,12 +1,9 @@
-import React, { useEffect } from 'react'
+
 import { NavLink } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hook'
-import { IProduct } from '../../interfaces/product';
 import { useGetProductsQuery, useRemoveProductMutation } from '../../services/product';
-import { fetchProducts, removeProduct } from '../../slices/product';
 
 const Products = () => {
-    const { data: products, isLoading, error } = useGetProductsQuery()
+    const { data: products, isLoading, error } = useGetProductsQuery(undefined)
     const [deleteProduct, response] = useRemoveProductMutation()
 
     if (isLoading) return <div>Loading...</div>
@@ -17,7 +14,7 @@ const Products = () => {
             {/* Page Heading */}
             <div className='d-flex justify-content-between align-items-center'>
                 <h1 className="h3 my-3 text-gray-800">Products Manage Table</h1>
-                <NavLink to={`/product-add`}>
+                <NavLink to={`/admin/product-add`}>
                     <button className="btn btn-primary btn-icon-split">
                         <span className="icon text-white-50">
                             <i className="fas fa-plus"></i>
@@ -38,6 +35,7 @@ const Products = () => {
                                     <th>Name</th>
                                     <th>Price</th>
                                     <th>Image</th>
+                                    <th>Category</th>
                                     <th>Description</th>
                                     <th>Action</th>
                                 </tr>
@@ -54,16 +52,19 @@ const Products = () => {
                                         <td>
                                             <img src="" alt="" />
                                         </td>
+                                        <td></td>
                                         <td>Desc</td>
-                                        <td>
+                                        <td className='d-flex align-ỉtems-center justify-content-center'>
                                             <button className='btn btn-danger text mr-2'
                                                 onClick={() => {
-                                                    window.confirm("Are you sure?")
-                                                    deleteProduct(item.id)
+                                                    const confirm = window.confirm("Are you sure?")
+                                                    if (confirm) {
+                                                        deleteProduct(item.id)
+                                                    }
                                                 }}>
                                                 Remove
                                             </button>
-                                            <NavLink to={`/product/${item.id}/edit`}>
+                                            <NavLink to={`/admin/product/${item.id}/edit`}>
                                                 <button className='btn btn-success'>Edit</button>
                                             </NavLink>
                                         </td>
