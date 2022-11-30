@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hook'
 import { IUser } from '../../interfaces/user'
-import { login } from '../../slices/user'
+import { login } from '../../slices/auth'
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from '../../firebase'
 
@@ -19,10 +19,12 @@ const Register = (props: Props) => {
             .then((result) => {
                 const credential: any = GoogleAuthProvider.credentialFromResult(result)
                 const token = credential.accessToken
-                const username: any = result.user.displayName
-                dispatch(login());
-                localStorage.setItem('username', username);
-                navigate('/admin')
+                if (token) {
+                    const username: any = result.user.displayName
+                    dispatch(login());
+                    localStorage.setItem('username', username);
+                    navigate('/admin')
+                }
             }).catch((error) => {
                 console.log('error', error);
             })

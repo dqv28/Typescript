@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../app/hook"
-import { logout } from "../../slices/user"
+import { logout } from "../../slices/auth"
 
 type Props = {}
 
