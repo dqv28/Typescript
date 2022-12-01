@@ -1,6 +1,7 @@
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { upload } from '../../api/product'
 import { IProduct } from '../../interfaces/product'
 import { useAddProductMutation } from '../../services/product'
 
@@ -8,9 +9,14 @@ const ProductAdd = () => {
     const navigate = useNavigate()
     const [addProduct, { isLoading }] = useAddProductMutation()
     const { register, handleSubmit, formState: { errors } } = useForm<IProduct>()
-    const onHandleAdd: SubmitHandler<IProduct> = (product: IProduct) => {
+    const onHandleAdd: SubmitHandler<IProduct> = async (product: IProduct) => {
         try {
-            addProduct(product)
+            const formData = new FormData()
+            formData.append('file', product.imgUrl[0])
+            formData.append('upload_preset', 'dmjlzwse')
+            formData.append('cloud_name', 'dywccbjry')
+            const image = await upload(formData)
+            addProduct({ ...product, imgUrl: image.url })
             navigate('/admin/products')
         } catch (error) { }
     }
@@ -29,9 +35,8 @@ const ProductAdd = () => {
                     <div className="mb-3">
                         <label htmlFor="exampleInputEmail1" className="form-label">Image</label>
                         <input type="file" className="form-control"
-                            {...register("name", { required: true, minLength: 5 })} />
-                        {errors.name && errors.name.type === "required" && <span className='text-danger'>This field is required.</span>}
-                        {errors.name && errors.name.type === "minLength" && <span className='text-danger'>This field must be 5 charaters.</span>}
+                            {...register("imgUrl", { required: true })} />
+                        {errors.imgUrl && errors.imgUrl.type === "required" && <span className='text-danger'>This field is required.</span>}
                     </div>
 
                     <div className="mb-3">
@@ -44,16 +49,16 @@ const ProductAdd = () => {
                     <div className="mb-3">
                         <label htmlFor="exampleInputEmail1" className="form-label">Category</label>
                         <input type="text" className="form-control"
-                            {...register("name", { required: true, minLength: 5 })} />
-                        {errors.name && errors.name.type === "required" && <span className='text-danger'>This field is required.</span>}
-                        {errors.name && errors.name.type === "minLength" && <span className='text-danger'>This field must be 5 charaters.</span>}
+                            {...register("category", { required: true, minLength: 5 })} />
+                        {errors.category && errors.category.type === "required" && <span className='text-danger'>This field is required.</span>}
+                        {errors.category && errors.category.type === "minLength" && <span className='text-danger'>This field must be 5 charaters.</span>}
                     </div>
                     <div className="mb-3">
                         <label htmlFor="exampleInputEmail1" className="form-label">Descrition</label>
                         <input type="text" className="form-control"
-                            {...register("name", { required: true, minLength: 5 })} />
-                        {errors.name && errors.name.type === "required" && <span className='text-danger'>This field is required.</span>}
-                        {errors.name && errors.name.type === "minLength" && <span className='text-danger'>This field must be 5 charaters.</span>}
+                            {...register("desc", { required: true, minLength: 5 })} />
+                        {errors.desc && errors.desc.type === "required" && <span className='text-danger'>This field is required.</span>}
+                        {errors.desc && errors.desc.type === "minLength" && <span className='text-danger'>This field must be 5 charaters.</span>}
                     </div>
                     <div>
                         <button type="submit" className="btn btn-primary mr-2">Add</button>

@@ -6,7 +6,7 @@ type Props = {}
 const Sidebar = (props: Props) => {
     return (
         <div>
-            <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion h-100" id="accordionSidebar">
                 {/* Sidebar - Brand */}
                 <NavLink to={'/'}>
                     <a className="sidebar-brand d-flex align-items-center justify-content-center">

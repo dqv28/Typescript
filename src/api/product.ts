@@ -1,3 +1,4 @@
+import { async } from "@firebase/util"
 import axios from "axios"
 import { IProduct } from "../interfaces/product"
 import instance from "./config"
@@ -16,4 +17,10 @@ export const updateProduct = async (product: IProduct) => {
 }
 export const deleteProduct = async (id: number) => {
     return await instance.delete("/products/" + id)
+}
+export const upload = (data: any) => {
+    return fetch("https://api.cloudinary.com/v1_1/dywccbjry/image/upload", {
+        method: "POST",
+        body: data
+    }).then((resp) => resp.json())
 }

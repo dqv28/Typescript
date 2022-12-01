@@ -49,12 +49,12 @@ const Products = () => {
                                         </td>
                                         <td>{item.name}</td>
                                         <td>${item.price}</td>
-                                        <td>
-                                            <img src="" alt="" />
+                                        <td className='w-25 h-25'>
+                                            <img className='w-100 h-100' src={item.imgUrl} alt="" />
                                         </td>
-                                        <td></td>
-                                        <td>Desc</td>
-                                        <td className='d-flex align-ỉtems-center justify-content-center'>
+                                        <td>{item.category}</td>
+                                        <td>{item.desc}</td>
+                                        <td className=''>
                                             <button className='btn btn-danger text mr-2'
                                                 onClick={() => {
                                                     const confirm = window.confirm("Are you sure?")

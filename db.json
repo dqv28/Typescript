@@ -7,5 +7,22 @@
       "id": 1
     }
   ],
-  "products": []
+  "products": [
+    {
+      "name": "Tempura",
+      "imgUrl": "http://res.cloudinary.com/dywccbjry/image/upload/v1669858876/k1fzp8ceg8uafkugqdyw.jpg",
+      "price": 2000,
+      "category": "ccccc updated",
+      "desc": "cccccc updated",
+      "id": 1
+    },
+    {
+      "name": "Product D",
+      "imgUrl": "http://res.cloudinary.com/dywccbjry/image/upload/v1669859135/nqdlafnyrna3fjmbeipc.jpg",
+      "price": 3123,
+      "category": "scsdcasdcsd",
+      "desc": "sdfasdfasdfasd",
+      "id": 2
+    }
+  ]
 }
