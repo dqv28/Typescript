@@ -1,27 +1,45 @@
 {
   "users": [
     {
+      "email": "phuongdt@gmail.com",
+      "password": "$2a$10$oR983Su4WLFtYsUwq88T..j1RxKz/uNDE0O/hAE7xz.Z7muKfC.Aq",
       "username": "vuongdq",
-      "email": "dovuong020802@gmail.com",
-      "password": "123456",
       "id": 1
+    }
+  ],
+  "categories": [
+    {
+      "name": "Category A",
+      "id": 1
+    },
+    {
+      "name": "Category B",
+      "id": 2
+    },
+    {
+      "name": "Category C",
+      "id": 3
+    },
+    {
+      "name": "Category D",
+      "id": 4
     }
   ],
   "products": [
     {
       "name": "Tempura",
-      "imgUrl": "http://res.cloudinary.com/dywccbjry/image/upload/v1669858876/k1fzp8ceg8uafkugqdyw.jpg",
+      "imgUrl": "http://res.cloudinary.com/dywccbjry/image/upload/v1670291289/qmbayo94osr246zmqlr0.jpg",
       "price": 2000,
-      "category": "ccccc updated",
-      "desc": "cccccc updated",
+      "category": "Category A",
+      "desc": "abcdef",
       "id": 1
     },
     {
-      "name": "Product D",
-      "imgUrl": "http://res.cloudinary.com/dywccbjry/image/upload/v1669859135/nqdlafnyrna3fjmbeipc.jpg",
-      "price": 3123,
-      "category": "scsdcasdcsd",
-      "desc": "sdfasdfasdfasd",
+      "name": "Product B",
+      "imgUrl": "http://res.cloudinary.com/dywccbjry/image/upload/v1670291313/yptbvhppary1zotvudfr.jpg",
+      "price": 123,
+      "category": "Category D",
+      "desc": "eqweq",
       "id": 2
     }
   ]

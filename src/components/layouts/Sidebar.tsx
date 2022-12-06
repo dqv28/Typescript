@@ -39,6 +39,16 @@ const Sidebar = (props: Props) => {
                         </a>
                     </NavLink>
                 </li>
+                <li className="nav-item active">
+                    <NavLink to={'/admin/categories'}>
+                        <a className="nav-link">
+                            <i className="fas fa-fw fa-table" />
+                            <span>
+                                Categories
+                            </span>
+                        </a>
+                    </NavLink>
+                </li>
             </ul>
         </div>
     )

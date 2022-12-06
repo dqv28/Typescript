@@ -1,18 +1,24 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getUsers } from "../api/user";
+import { getUsersApi, login, register } from "../api/user";
 import { IUser } from "../interfaces/user";
 
-export const fetchUsers = createAsyncThunk('users/fetchUsers', getUsers)
+export const registerUser = createAsyncThunk(
+    'users/registerUser',
+    async (user: IUser) => {
+        const data = await register(user)
+        return data
+    }
+)
 
 const userSlice = createSlice({
     name: 'userSlice',
     initialState: {
-        username: ''
+        user: {}
     } as any,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(fetchUsers.fulfilled.type, (state, action: PayloadAction<IUser[]>) => {
-            state.username = action.payload
+        builder.addCase(registerUser.fulfilled.type, (state: any, action: PayloadAction<IUser>) => {
+            state.user = action.payload
         })
     }
 })

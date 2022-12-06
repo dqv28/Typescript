@@ -1,11 +1,12 @@
 
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hook'
 import { IUser } from '../../interfaces/user'
 import { login } from '../../slices/auth'
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from '../../firebase'
+import { useSigninMutation } from '../../services/user'
 
 type Props = {}
 
@@ -29,10 +30,24 @@ const Register = (props: Props) => {
                 console.log('error', error);
             })
     }
-    const onHandleLogin = (user: IUser) => {
-        dispatch(login());
+
+    const [loginUser] = useSigninMutation()
+    const onHandleLogin: SubmitHandler<IUser> = (user: IUser) => {
+        dispatch(login())
         localStorage.setItem('username', user.username);
         navigate('/admin')
+        // loginUser(user).unwrap()
+        //     .then((resp: any) => {
+        //         dispatch(login())
+        //         localStorage.setItem('username', resp.username);
+        //         navigate('/admin')
+        //     })
+        //     .catch((err: any) => {
+        //         console.log(user);
+
+        //         alert('Loi vl')
+        //     })
+
     }
 
     return (

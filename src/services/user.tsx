@@ -6,17 +6,17 @@ export const userApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000' }),
     tagTypes: ['User'],
     endpoints: (builder) => ({
-        getUsers: builder.query<IUser, void>({
-            query: () => `/users`,
-            providesTags: ['User']
+        signup: builder.mutation({
+            query: (user: IUser) => ({
+                url: '/signup',
+                method: 'POST',
+                body: user
+            }),
+            invalidatesTags: ['User']
         }),
-        getUser: builder.query<IUser, number>({
-            query: (id: number) => `/users/${id}`,
-            providesTags: ['User']
-        }),
-        addUser: builder.mutation<IUser, Omit<IUser, 'id'>>({
-            query: (user) => ({
-                url: `/users`,
+        signin: builder.mutation({
+            query: (user: any) => ({
+                url: '/signin',
                 method: 'POST',
                 body: user
             }),
@@ -25,4 +25,4 @@ export const userApi = createApi({
     })
 })
 
-export const { useGetUsersQuery, useGetUserQuery, useAddUserMutation } = userApi
+export const { useSignupMutation, useSigninMutation } = userApi

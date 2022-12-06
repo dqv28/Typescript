@@ -1,16 +1,25 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../app/hook'
 import { IUser } from '../../interfaces/user'
-import { useAddUserMutation } from '../../services/user'
+import { registerUser } from '../../slices/user'
 
 type Props = {}
 
 const Register = (props: Props) => {
     const { register, handleSubmit, formState: { errors } } = useForm<IUser>()
-    const [addUser, result] = useAddUserMutation()
-    const signup = (user: IUser) => {
-        addUser(user)
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const registerAuth = (user: IUser) => {
+        const signup: any = dispatch(registerUser(user))
+        if (signup) {
+            // document.querySelector('#alert')?.textContent = 'Dăng ký thành công.'
+            alert('Dang ky thanh cong!')
+            setInterval(() => {
+                navigate('/login')
+            }, 3000)
+        }
     }
 
     return (
@@ -26,7 +35,8 @@ const Register = (props: Props) => {
                                     <div className="text-center">
                                         <h1 className="h4 text-gray-900 mb-4">Create an Account!</h1>
                                     </div>
-                                    <form className="user" onSubmit={handleSubmit(signup)}>
+                                    <div className='text-danger' id='alert'></div>
+                                    <form className="user" onSubmit={handleSubmit(registerAuth)}>
                                         <div className="form-group">
                                             <input type="text" className="form-control form-control-user"
                                                 placeholder="User name"

@@ -3,11 +3,13 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { upload } from '../../api/product'
 import { IProduct } from '../../interfaces/product'
+import { useGetCatesQuery } from '../../services/category'
 import { useAddProductMutation } from '../../services/product'
 
 const ProductAdd = () => {
     const navigate = useNavigate()
     const [addProduct, { isLoading }] = useAddProductMutation()
+    const { data } = useGetCatesQuery()
     const { register, handleSubmit, formState: { errors } } = useForm<IProduct>()
     const onHandleAdd: SubmitHandler<IProduct> = async (product: IProduct) => {
         try {
@@ -48,10 +50,15 @@ const ProductAdd = () => {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="exampleInputEmail1" className="form-label">Category</label>
-                        <input type="text" className="form-control"
-                            {...register("category", { required: true, minLength: 5 })} />
-                        {errors.category && errors.category.type === "required" && <span className='text-danger'>This field is required.</span>}
-                        {errors.category && errors.category.type === "minLength" && <span className='text-danger'>This field must be 5 charaters.</span>}
+                        <select className="form-control"
+                            aria-label="Default select example"
+                            {...register('category', { required: true })}>
+                            <option value={'0'}>Select Category</option>
+                            {data?.map((item, index) => (
+                                <option key={index} value={item.name}>{item.name}</option>
+                            ))}
+                        </select>
+                        {errors.category && errors.category.type === "required" && <span className='text-danger'>Please choose a catgory.</span>}
                     </div>
                     <div className="mb-3">
                         <label htmlFor="exampleInputEmail1" className="form-label">Descrition</label>

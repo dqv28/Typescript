@@ -13,6 +13,8 @@ import { productApi } from "../services/product";
 import storage from "redux-persist/lib/storage";
 import authSlice from "../slices/auth"
 import userSlice from "../slices/user"
+import { userApi } from "../services/user";
+import { cateApi } from "../services/category";
 
 const persistConfig = {
     key: 'root',
@@ -24,7 +26,8 @@ const rootReducer = combineReducers({
     auth: authSlice,
     user: userSlice,
     [productApi.reducerPath]: productApi.reducer,
-    // [userApi.reducerPath]: userApi.reducer
+    [userApi.reducerPath]: userApi.reducer,
+    [cateApi.reducerPath]: cateApi.reducer
 })
 
 const persistedRducer = persistReducer(persistConfig, rootReducer);
@@ -35,7 +38,7 @@ export const store = configureStore({
         serializableCheck: {
             ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-    }).concat(productApi.middleware)
+    }).concat([productApi.middleware, userApi.middleware, cateApi.middleware])
 })
 
 export type AppDispatch = typeof store.dispatch;
