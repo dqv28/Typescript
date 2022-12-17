@@ -37,11 +37,11 @@ const Register = (props: Props) => {
                                     </div>
                                     <div className='text-danger' id='alert'></div>
                                     <form className="user" onSubmit={handleSubmit(registerAuth)}>
-                                        <div className="form-group">
+                                        {/* <div className="form-group">
                                             <input type="text" className="form-control form-control-user"
                                                 placeholder="User name"
                                                 {...register('username')} />
-                                        </div>
+                                        </div> */}
                                         <div className="form-group">
                                             <input type="text" className="form-control form-control-user"
                                                 placeholder="Email Address"

@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import React, { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
@@ -34,6 +35,7 @@ const ProductEdit = () => {
             }
 
             editProduct({ ...product, imgUrl: imgPath })
+            message.info('Update product successfully.')
             navigate('/admin/products')
         } catch (error) { }
     }
@@ -64,7 +66,7 @@ const ProductEdit = () => {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="exampleInputEmail1" className="form-label">Category</label>
-                        <select className="form-control"
+                        <select className="form-control selectpicker"
                             aria-label="Default select example"
                             {...register('category', { required: true })}>
                             <option value={'0'}>Select Category</option>

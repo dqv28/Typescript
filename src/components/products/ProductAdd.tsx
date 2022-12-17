@@ -1,4 +1,4 @@
-import React from 'react'
+import { message } from 'antd'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { upload } from '../../api/product'
@@ -19,7 +19,9 @@ const ProductAdd = () => {
             formData.append('cloud_name', 'dywccbjry')
             const image = await upload(formData)
             addProduct({ ...product, imgUrl: image.url })
+            message.info('Add product successfully.')
             navigate('/admin/products')
+
         } catch (error) { }
     }
     return (

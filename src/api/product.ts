@@ -1,5 +1,4 @@
-import { async } from "@firebase/util"
-import axios from "axios"
+
 import { IProduct } from "../interfaces/product"
 import instance from "./config"
 

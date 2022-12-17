@@ -7,10 +7,11 @@ import { login } from '../../slices/auth'
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from '../../firebase'
 import { useSigninMutation } from '../../services/user'
+import { message } from 'antd'
 
 type Props = {}
 
-const Register = (props: Props) => {
+const Login = (props: Props) => {
     const { register, handleSubmit, formState: { errors } } = useForm<IUser>()
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -21,33 +22,29 @@ const Register = (props: Props) => {
                 const credential: any = GoogleAuthProvider.credentialFromResult(result)
                 const token = credential.accessToken
                 if (token) {
-                    const username: any = result.user.displayName
+                    const username: any = result.user.email
                     dispatch(login());
                     localStorage.setItem('username', username);
                     navigate('/admin')
                 }
             }).catch((error) => {
-                console.log('error', error);
+                message.info(error)
             })
     }
 
     const [loginUser] = useSigninMutation()
     const onHandleLogin: SubmitHandler<IUser> = (user: IUser) => {
-        dispatch(login())
-        localStorage.setItem('username', user.username);
-        navigate('/admin')
-        // loginUser(user).unwrap()
-        //     .then((resp: any) => {
-        //         dispatch(login())
-        //         localStorage.setItem('username', resp.username);
-        //         navigate('/admin')
-        //     })
-        //     .catch((err: any) => {
-        //         console.log(user);
-
-        //         alert('Loi vl')
-        //     })
-
+        loginUser(user).unwrap()
+            .then((resp: any) => {
+                if (resp.accessToken) {
+                    dispatch(login())
+                    localStorage.setItem('username', resp.user.email);
+                    navigate('/admin/products')
+                }
+            })
+            .catch((err: any) => {
+                message.info(err.data)
+            })
     }
 
     return (
@@ -66,9 +63,9 @@ const Register = (props: Props) => {
                                     <form className="user" onSubmit={handleSubmit(onHandleLogin)}>
                                         <div className="form-group">
                                             <input type="text" className="form-control form-control-user"
-                                                placeholder="User name"
-                                                {...register('username', { required: true })} />
-                                            {errors.username && errors.username.type === "required" &&
+                                                placeholder="Email"
+                                                {...register('email', { required: true })} />
+                                            {errors.email && errors.email.type === "required" &&
                                                 <span className='text-danger small'>This field is not required.</span>
                                             }
                                         </div>
@@ -110,4 +107,4 @@ const Register = (props: Props) => {
     )
 }
 
-export default Register
+export default Login

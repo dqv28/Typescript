@@ -1,12 +1,28 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { ICategory } from '../../interfaces/category'
 import { useDeleteCateMutation, useGetCatesQuery } from '../../services/category'
+import { useEditProductMutation, useGetProductsQuery } from '../../services/product'
 
 type Props = {}
 
 const Categories = (props: Props) => {
     const [deleteCate] = useDeleteCateMutation()
-    const { data: categories, isLoading, error } = useGetCatesQuery()
+    const [updateProduct] = useEditProductMutation()
+    const { data: categories, isLoading, error }: any = useGetCatesQuery()
+    const { data: products }: any = useGetProductsQuery()
+    const onHandleDelete = (cate: ICategory) => {
+        const confirm = window.confirm("Are you sure?")
+        if (confirm) {
+            products.forEach((product: any) => {
+                if (product.category !== cate.name) {
+                    return deleteCate(cate.id)
+                } else {
+                    return updateProduct({ ...product, category: 'Unclassified' })
+                }
+            })
+        }
+    }
     if (isLoading) return <div>Loading...</div>
     if (error) return <div>Error</div>
 
@@ -27,7 +43,7 @@ const Categories = (props: Props) => {
             <div className="card mb-4">
                 <div className="card-body">
                     <div className="table-responsive">
-                        <table className="table table-bordered" width="100%">
+                        <table className="table table-bordered" id="dataTable" width="100%" cellSpacing="{0}">
                             <thead>
                                 <tr>
                                     <th>
@@ -38,26 +54,29 @@ const Categories = (props: Props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {categories ? categories.map((item: any, index: number) => (
+                                {categories.length > 0 ? categories.map((item: any, index: number) => (
                                     <tr key={index}>
                                         <td>
                                             <input type="checkbox" name="" id="" />
                                         </td>
                                         <td>{item.name}</td>
                                         <td className=''>
-                                            <button className='btn btn-danger text mr-2'
-                                                onClick={() => {
-                                                    const confirm = window.confirm("Are you sure?")
-                                                    if (confirm) {
-                                                        deleteCate(item.id)
-                                                    }
-                                                }}
-                                            >
-                                                Remove
-                                            </button>
-                                            <NavLink to={`/admin/category/${item.id}/edit`}>
-                                                <button className='btn btn-success'>Edit</button>
-                                            </NavLink>
+                                            {item.name !== "Unclassified" ?
+                                                <div>
+                                                    <button className='btn btn-danger text mr-2'
+                                                        onClick={() => onHandleDelete(item)}>
+                                                        Remove
+                                                    </button>
+                                                    <NavLink to={`/admin/category/${item.id}/edit`}>
+                                                        <button className='btn btn-success'>Edit</button>
+                                                    </NavLink>
+                                                </div> :
+                                                <div>
+                                                    <span className='text-success px-2 py-1 border border-success rounded'>Default</span>
+                                                </div>
+                                            }
+
+
                                         </td>
                                     </tr>
                                 )) : <tr className="odd"><td valign="top" colSpan={6} className="dataTables_empty">No data available in table.</td></tr>}

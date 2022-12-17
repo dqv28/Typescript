@@ -3,26 +3,29 @@
     {
       "email": "phuongdt@gmail.com",
       "password": "$2a$10$oR983Su4WLFtYsUwq88T..j1RxKz/uNDE0O/hAE7xz.Z7muKfC.Aq",
-      "username": "vuongdq",
       "id": 1
     }
   ],
   "categories": [
     {
-      "name": "Category A",
+      "name": "Unclassified",
       "id": 1
     },
     {
-      "name": "Category B",
+      "name": "Category A",
       "id": 2
     },
     {
       "name": "Category C",
-      "id": 3
+      "id": 4
     },
     {
       "name": "Category D",
-      "id": 4
+      "id": 5
+    },
+    {
+      "name": "Category B",
+      "id": 6
     }
   ],
   "products": [
@@ -38,9 +41,17 @@
       "name": "Product B",
       "imgUrl": "http://res.cloudinary.com/dywccbjry/image/upload/v1670291313/yptbvhppary1zotvudfr.jpg",
       "price": 123,
-      "category": "Category D",
+      "category": "Category C",
       "desc": "eqweq",
       "id": 2
+    },
+    {
+      "name": "Product D",
+      "imgUrl": "http://res.cloudinary.com/dywccbjry/image/upload/v1671202878/cmrkz47gmexcmf72otn4.jpg",
+      "price": 2000,
+      "category": "Category A",
+      "desc": "eqweq",
+      "id": 3
     }
   ]
 }

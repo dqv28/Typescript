@@ -1,11 +1,53 @@
-
+import { message, Popconfirm, Table } from 'antd';
+import { MessageType } from 'antd/es/message/interface';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../app/hook';
+import { IProduct } from '../../interfaces/product';
+import { useGetCatesQuery } from '../../services/category';
 import { useGetProductsQuery, useRemoveProductMutation } from '../../services/product';
+import { filterByCate, searchByKey } from '../../slices/product';
 
 const Products = () => {
-    const { data: products, isLoading, error } = useGetProductsQuery(undefined)
-    const [deleteProduct, response] = useRemoveProductMutation()
+    const { Column, ColumnGroup } = Table;
+    let products: IProduct[] = []
+    const { data: productList, isLoading, error }: any = useGetProductsQuery(undefined)
+    const { data: categories } = useGetCatesQuery()
 
+    const text = 'Are you sure to delete this product?';
+    const [deleteProduct] = useRemoveProductMutation()
+    const onHandleRemove = (id: number) => {
+        const confirm: MessageType = message.info('Remove successfully.');
+        if (confirm !== null) {
+            deleteProduct(id)
+        }
+    }
+
+    const dispatch = useAppDispatch()
+    const [searchTerm, setSearchTerm] = useState("");
+    const [cate, setCate] = useState("");
+
+    const onHandleInput = (e: any) => {
+        setSearchTerm(e.target.value);
+    }
+    const onHandleSelect = (e: any) => {
+        setCate(e.target.value);
+    }
+
+    useEffect(() => {
+        if (searchTerm) {
+            dispatch(searchByKey(searchTerm));
+        } else if (cate) {
+            dispatch(filterByCate(cate));
+        }
+    }, []);
+
+    const { filteredProducts }: any = useAppSelector((state: any) => state.filteredProducts || []);
+    if (searchTerm === '') {
+        products = productList
+    } else {
+        products = filteredProducts
+    }
     if (isLoading) return <div>Loading...</div>
     if (error) return <div>Error</div>
 
@@ -25,24 +67,28 @@ const Products = () => {
             </div>
             <div className="card mb-4">
                 <div className="card-body">
-                    {/* <div >
-                        <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div className="input-group">
-                                <input type="text" className="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
-                                <div className="input-group-append">
-                                    <button className="btn btn-primary" type="button">
-                                        <i className="fas fa-search fa-sm" />
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                        <select className="card-item" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div> */}
+                    <div className='d-flex justify-content-between align-items-center'>
+                        <label className="d-flex align-items-center w-25 mb-3">
+                            <span className='mx-2'>Search: </span>
+                            <input type="search"
+                                className="form-control form-control-sm"
+                                aria-controls="dataTable"
+                                onChange={onHandleInput}
+                                value={searchTerm} />
+                        </label>
+                        <label className="d-flex align-items-center w-25 mb-3">
+                            <span className='mx-2'>Filter: </span>
+                            <select className="form-control form-control-sm"
+                                aria-label="Default select example"
+                                onChange={onHandleSelect}>
+                                <option defaultValue={''}>Select a category</option>
+                                {categories?.map((item, index) => (
+                                    <option key={index} value={item.name}>{item.name}</option>
+                                ))}
+                            </select>
+                        </label>
+
+                    </div>
                     <div className="table-responsive">
                         <table className="table table-bordered" width="100%">
                             <thead>
@@ -73,15 +119,13 @@ const Products = () => {
                                         <td>{item.category}</td>
                                         <td>{item.desc}</td>
                                         <td className=''>
-                                            <button className='btn btn-danger text mr-2'
-                                                onClick={() => {
-                                                    const confirm = window.confirm("Are you sure?")
-                                                    if (confirm) {
-                                                        deleteProduct(item.id)
-                                                    }
-                                                }}>
-                                                Remove
-                                            </button>
+                                            <Popconfirm placement="top"
+                                                title={text}
+                                                onConfirm={() => onHandleRemove(item.id)}
+                                                okText="Yes"
+                                                cancelText="No">
+                                                <button className='btn btn-danger text mr-2'>Remove</button>
+                                            </Popconfirm>
                                             <NavLink to={`/admin/product/${item.id}/edit`}>
                                                 <button className='btn btn-success'>Edit</button>
                                             </NavLink>

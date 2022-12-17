@@ -13,6 +13,7 @@ import { productApi } from "../services/product";
 import storage from "redux-persist/lib/storage";
 import authSlice from "../slices/auth"
 import userSlice from "../slices/user"
+import productSlice from "../slices/product"
 import { userApi } from "../services/user";
 import { cateApi } from "../services/category";
 
@@ -25,6 +26,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     auth: authSlice,
     user: userSlice,
+    products: productSlice,
     [productApi.reducerPath]: productApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [cateApi.reducerPath]: cateApi.reducer
