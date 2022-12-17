@@ -1,3 +1,5 @@
+import { Alert, message, Popconfirm, Space, Spin } from 'antd'
+import { MessageType } from 'antd/es/message/interface'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { ICategory } from '../../interfaces/category'
@@ -11,9 +13,10 @@ const Categories = (props: Props) => {
     const [updateProduct] = useEditProductMutation()
     const { data: categories, isLoading, error }: any = useGetCatesQuery()
     const { data: products }: any = useGetProductsQuery()
-    const onHandleDelete = (cate: ICategory) => {
-        const confirm = window.confirm("Are you sure?")
-        if (confirm) {
+    const text = 'Are you sure to delete this category?';
+    const onHandleRemove = (cate: ICategory) => {
+        const confirm: MessageType = message.info('Remove successfully.');
+        if (confirm !== null) {
             products.forEach((product: any) => {
                 if (product.category !== cate.name) {
                     return deleteCate(cate.id)
@@ -23,8 +26,16 @@ const Categories = (props: Props) => {
             })
         }
     }
-    if (isLoading) return <div>Loading...</div>
-    if (error) return <div>Error</div>
+    if (isLoading)
+        return <Space direction="vertical" style={{ width: '100%' }}>
+            <Spin tip="Loading" size="large">
+                <div className="content" />
+            </Spin>
+        </Space>
+    if (error)
+        return <Space direction="vertical" style={{ width: '100%' }}>
+            <Alert message="Error!!!" type="error" />
+        </Space>
 
     return (
         <>
@@ -63,10 +74,13 @@ const Categories = (props: Props) => {
                                         <td className=''>
                                             {item.name !== "Unclassified" ?
                                                 <div>
-                                                    <button className='btn btn-danger text mr-2'
-                                                        onClick={() => onHandleDelete(item)}>
-                                                        Remove
-                                                    </button>
+                                                    <Popconfirm placement="top"
+                                                        title={text}
+                                                        onConfirm={() => onHandleRemove(item)}
+                                                        okText="Yes"
+                                                        cancelText="No">
+                                                        <button className='btn btn-danger text mr-2'>Remove</button>
+                                                    </Popconfirm>
                                                     <NavLink to={`/admin/category/${item.id}/edit`}>
                                                         <button className='btn btn-success'>Edit</button>
                                                     </NavLink>

@@ -1,4 +1,4 @@
-import { message, Popconfirm, Table } from 'antd';
+import { Alert, message, Popconfirm, Space, Spin, Table } from 'antd';
 import { MessageType } from 'antd/es/message/interface';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -48,8 +48,16 @@ const Products = () => {
     } else {
         products = filteredProducts
     }
-    if (isLoading) return <div>Loading...</div>
-    if (error) return <div>Error</div>
+    if (isLoading)
+        return <Space direction="vertical" style={{ width: '100%' }}>
+            <Spin tip="Loading" size="large">
+                <div className="content" />
+            </Spin>
+        </Space>
+    if (error)
+        return <Space direction="vertical" style={{ width: '100%' }}>
+            <Alert message="Error!!!" type="error" />
+        </Space>
 
     return (
         <>

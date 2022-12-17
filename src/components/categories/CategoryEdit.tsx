@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import React, { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
@@ -18,6 +19,7 @@ const CategoryEdit = () => {
     const onHandleAdd: SubmitHandler<ICategory> = async (cate: ICategory) => {
         try {
             updateCate(cate)
+            message.info('Update category successfully.')
             navigate('/admin/categories')
         } catch (error) { }
     }

@@ -19,8 +19,8 @@ const productSlice = createSlice({
         },
         searchByKey: (state, action) => {
             return {
-                ...state.filteredProducts,
-                filteredProducts: [...state.products].filter((product) =>
+                ...state.products,
+                products: [...state.products].filter((product) =>
                     product.name.toLowerCase().includes(
                         action.payload.toLowerCase()
                     )
@@ -29,8 +29,8 @@ const productSlice = createSlice({
         },
         filterByCate: (state, action) => {
             return {
-                ...state.filteredProducts,
-                filteredProducts: [...state.products].filter((product) =>
+                ...state.products,
+                products: [...state.products].filter((product) =>
                     product.category.includes(action.payload)
                 )
             }

@@ -16,16 +16,16 @@
       "id": 2
     },
     {
+      "name": "Category B",
+      "id": 3
+    },
+    {
       "name": "Category C",
       "id": 4
     },
     {
       "name": "Category D",
       "id": 5
-    },
-    {
-      "name": "Category B",
-      "id": 6
     }
   ],
   "products": [
@@ -41,15 +41,15 @@
       "name": "Product B",
       "imgUrl": "http://res.cloudinary.com/dywccbjry/image/upload/v1670291313/yptbvhppary1zotvudfr.jpg",
       "price": 123,
-      "category": "Category C",
+      "category": "Category B",
       "desc": "eqweq",
       "id": 2
     },
     {
-      "name": "Product D",
+      "name": "Product D updated",
       "imgUrl": "http://res.cloudinary.com/dywccbjry/image/upload/v1671202878/cmrkz47gmexcmf72otn4.jpg",
       "price": 2000,
-      "category": "Category A",
+      "category": "Category D",
       "desc": "eqweq",
       "id": 3
     }

@@ -7,7 +7,7 @@ import { login } from '../../slices/auth'
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from '../../firebase'
 import { useSigninMutation } from '../../services/user'
-import { message } from 'antd'
+import { Alert, message, Space } from 'antd'
 
 type Props = {}
 
@@ -60,6 +60,9 @@ const Login = (props: Props) => {
                                     <div className="text-center">
                                         <h1 className="h4 text-gray-900 mb-4">Login</h1>
                                     </div>
+                                    {/* <Space direction="vertical" style={{ width: '100%' }}>
+                                        <Alert message="Error" type="error" showIcon />
+                                    </Space> */}
                                     <form className="user" onSubmit={handleSubmit(onHandleLogin)}>
                                         <div className="form-group">
                                             <input type="text" className="form-control form-control-user"
