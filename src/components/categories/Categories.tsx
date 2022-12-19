@@ -89,8 +89,6 @@ const Categories = (props: Props) => {
                                                     <span className='text-success px-2 py-1 border border-success rounded'>Default</span>
                                                 </div>
                                             }
-
-
                                         </td>
                                     </tr>
                                 )) : <tr className="odd"><td valign="top" colSpan={6} className="dataTables_empty">No data available in table.</td></tr>}
